@@ -1,9 +1,18 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {persistStore} from "redux-persist";
+import {persistReducer, persistStore} from "redux-persist";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
+import storage from "redux-persist/lib/storage";
+import {usersReducer} from "../features/users/usersSlice";
 
+const usersPersistConfig = {
+    key: 'repository:users',
+    storage,
+    whitelist: ['user'],
+}
 
-const rootReducer = combineReducers({})
+const rootReducer = combineReducers({
+    users: persistReducer(usersPersistConfig, usersReducer),
+});
 export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
