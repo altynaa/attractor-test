@@ -4,12 +4,9 @@ import {Octokit} from "octokit";
 
 const usersRouter = express.Router();
 
-const octokit = new Octokit();
-
-let savedAccessToken = null;
-
 usersRouter.post('/github', async (req, res, next) => {
     try {
+        const octokit = new Octokit();
         const response = await octokit.request("POST https://github.com/login/oauth/access_token", {
             headers: {
                 Accept: "application/json"
@@ -18,18 +15,18 @@ usersRouter.post('/github', async (req, res, next) => {
                 client_id: GITHUB_CLIENT_ID,
                 client_secret: CLIENT_SECRET,
                 code: req.body.code,
+                scope: "user user:email"
             }
         });
 
-        savedAccessToken = response.data.access_token;
-
         const userInfo = await octokit.request("GET https://api.github.com/user", {
             headers: {
-                Authorization: `token ${savedAccessToken}`
+                Authorization: `token ${response.data.access_token}`
             },
         });
 
-        return res.send ({
+        return res.send({
+            token: response.data.access_token,
             name: userInfo.data.name,
             login: userInfo.data.login,
             email: userInfo.data.email,
@@ -43,6 +40,29 @@ usersRouter.post('/github', async (req, res, next) => {
         return next(error);
     }
 });
+
+usersRouter.patch('/edit', async (req, res, next) => {
+    try {
+        const octokit = new Octokit({
+            auth: req.body.token
+        });
+
+        const response = await octokit.request("PATCH /user", {
+            data: {
+                name: req.body.name,
+                bio: req.body.bio,
+                company: req.body.company,
+                location: req.body.location,
+            },
+            headers: {
+                'X-GitHub-Api-Version': '2022-11-28'
+            }
+        });
+        return res.send(response.data);
+    } catch (error) {
+        return next(error);
+    }
+})
 
 export default usersRouter;
 
