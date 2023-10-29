@@ -10,7 +10,6 @@ let savedAccessToken = null;
 
 usersRouter.post('/github', async (req, res, next) => {
     try {
-        console.log('in back')
         const response = await octokit.request("POST https://github.com/login/oauth/access_token", {
             headers: {
                 Accept: "application/json"
@@ -22,10 +21,24 @@ usersRouter.post('/github', async (req, res, next) => {
             }
         });
 
-        console.log(response.data.access_token);
         savedAccessToken = response.data.access_token;
-        console.log('token', savedAccessToken);
-        return response.data.access_token;
+
+        const userInfo = await octokit.request("GET https://api.github.com/user", {
+            headers: {
+                Authorization: `token ${savedAccessToken}`
+            },
+        });
+
+        return res.send ({
+            name: userInfo.data.name,
+            login: userInfo.data.login,
+            email: userInfo.data.email,
+            avatar: userInfo.data.avatar_url,
+            company: userInfo.data.company,
+            location: userInfo.data.location,
+            bio: userInfo.data.bio,
+            url: userInfo.data.url
+        });
     } catch (error) {
         return next(error);
     }
