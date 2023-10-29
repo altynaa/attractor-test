@@ -24,7 +24,7 @@ const Login = () => {
                 </Avatar>
 
                 <Box sx={{pt: 2}}>
-                            <Link component={RouterLink} to={`https://github.com/login/oauth/authorize?client_id=` + GITHUB_CLIENT_ID} variant="body2">
+                            <Link component={RouterLink} to={`https://github.com/login/oauth/authorize?client_id=` + GITHUB_CLIENT_ID + '&scope=user'} variant="body2">
                                 Register or login with GitHub
                             </Link>
                 </Box>
