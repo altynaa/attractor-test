@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {GlobalError, User} from "../../types";
+import {GlobalError, Profile, User} from "../../types";
 import {isAxiosError} from "axios";
 import axiosApi from "../../axiosApi";
 
@@ -17,3 +17,20 @@ export const githubLogin = createAsyncThunk<User, string, {rejectValue: GlobalEr
         }
     }
 );
+
+export const editProfile = createAsyncThunk<void, Profile >(
+    'users/editProfile',
+    async (profile) => {
+        const formData = new FormData();
+        const keys = Object.keys(profile) as (keyof Profile)[];
+        keys.forEach(key => {
+            const value = profile[key];
+
+            if (value != null) {
+                formData.append(key, value);
+            }
+        })
+
+        await axiosApi.patch('/users/edit', formData);
+    }
+)

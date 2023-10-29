@@ -12,3 +12,11 @@ export interface User {
     bio: string | null,
     url: string | null
 }
+
+export interface Profile {
+    name: string,
+    company: string,
+    location: string,
+    bio: string,
+
+}

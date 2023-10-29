@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import {useAppSelector} from "../../app/hooks";
 import {selectLoginLoading, selectUser} from "./usersSlice";
 import {
@@ -6,7 +7,6 @@ import {
     Box,
     Card,
     CardContent,
-    CardHeader,
     CircularProgress,
     Grid,
     Typography
@@ -32,7 +32,6 @@ const Profile = () => {
                     </Box> : <Grid item xs={12}>
                         {user &&
                             <Card>
-                                <CardHeader title={user.name}/>
                                 {user.avatar === null ? 'No avatar' :
                                     <Avatar
                                         alt="avatar"
@@ -40,12 +39,21 @@ const Profile = () => {
                                         sx={{width: 56, height: 56}}
                                     />}
                                 <CardContent>
-                                    <Typography>Login: {user.login} </Typography>
+                                    <Typography>Name: {user.name}
+                                        <Link to={'/profileForm'} className="btn btn-success">Edit</Link>
+                                    </Typography>
+                                    <Typography>Login: {user.login}  </Typography>
                                     <Typography>Email: {user.email === null ? 'User did not add email' : user.email} </Typography>
-                                    <Typography>Company: {user.company === null ? 'User did not add name of company' : user.company} </Typography>
-                                    <Typography>Location: {user.location === null ? 'User did not add location' : user.location} </Typography>
-                                    <Typography>Bio: {user.bio === null ? 'User did not add bio' : user.bio} </Typography>
-                                    <Typography>Url: {user.url} </Typography>
+                                    <Typography>Company: {user.company === null ? 'User did not add name of company' : user.company}
+                                        <Link to={'/profileForm'} className="btn btn-success">Edit</Link>
+                                    </Typography>
+                                    <Typography>Location: {user.location === null ? 'User did not add location' : user.location}
+                                        <Link to={'/profileForm'} className="btn btn-success">Edit</Link>
+                                    </Typography>
+                                    <Typography>Bio: {user.bio === null ? 'User did not add bio' : user.bio}
+                                        <Link to={'/profileForm'} className="btn btn-success">Edit</Link>
+                                    </Typography>
+                                    <Link to={'/profileForm'} className="btn btn-success">Edit</Link>
                                 </CardContent>
                             </Card>
                         }
