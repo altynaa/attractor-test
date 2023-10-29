@@ -24,6 +24,7 @@ const usersSlice = createSlice({
         builder.addCase(githubLogin.fulfilled, (state, {payload: userInfo}) => {
             state.loginLoading = false;
             state.user = userInfo;
+            console.log(state.user);
         });
         builder.addCase(githubLogin.rejected, (state) => {
             state.loginLoading = false;

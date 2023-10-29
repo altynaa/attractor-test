@@ -3,6 +3,7 @@ export interface GlobalError {
 }
 
 export interface User {
+    token: string,
     name: string | null,
     login: string | null,
     email: string | null,
@@ -14,9 +15,9 @@ export interface User {
 }
 
 export interface Profile {
+    token: string,
     name: string,
     company: string,
     location: string,
     bio: string,
-
 }

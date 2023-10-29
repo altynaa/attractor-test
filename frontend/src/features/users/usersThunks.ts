@@ -21,16 +21,6 @@ export const githubLogin = createAsyncThunk<User, string, {rejectValue: GlobalEr
 export const editProfile = createAsyncThunk<void, Profile >(
     'users/editProfile',
     async (profile) => {
-        const formData = new FormData();
-        const keys = Object.keys(profile) as (keyof Profile)[];
-        keys.forEach(key => {
-            const value = profile[key];
-
-            if (value != null) {
-                formData.append(key, value);
-            }
-        })
-
-        await axiosApi.patch('/users/edit', formData);
+        await axiosApi.patch('/users/edit', profile);
     }
 )

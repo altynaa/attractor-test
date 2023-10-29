@@ -11,6 +11,7 @@ const ProfileForm = () => {
     const dispatch = useAppDispatch();
     const userInfo = useAppSelector(selectUser);
     const [profile, setProfile] = useState<Profile>({
+        token: '',
         name: '',
         bio: '',
         location: '',
@@ -21,6 +22,7 @@ const ProfileForm = () => {
     useEffect(() => {
         if (userInfo) {
             const newProfile: Profile = {
+                token: userInfo.token,
                 name: userInfo.name !== null ? userInfo.name : '',
                 bio: userInfo.bio !== null ? userInfo.bio : '',
                 location: userInfo.location !== null ? userInfo.location : '',
