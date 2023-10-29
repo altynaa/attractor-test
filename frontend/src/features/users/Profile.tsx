@@ -1,10 +1,57 @@
 import React from 'react';
+import {useAppSelector} from "../../app/hooks";
+import {selectLoginLoading, selectUser} from "./usersSlice";
+import {
+    Avatar,
+    Box,
+    Card,
+    CardContent,
+    CardHeader,
+    CircularProgress,
+    Grid,
+    Typography
+} from '@mui/material';
 
 const Profile = () => {
+    const user = useAppSelector(selectUser);
+    const loading = useAppSelector(selectLoginLoading);
+
     return (
-        <div>
-            this is profile page
-        </div>
+        <Grid container direction="column" spacing={2} padding={2}>
+            <Grid item container justifyContent="space-between" alignItems="center">
+                <Grid item>
+                    <Typography variant="h4">
+                        User profile
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid item container spacing={2}>
+                {loading ?
+                    <Box sx={{display: 'flex'}}>
+                        <CircularProgress/>
+                    </Box> : <Grid item xs={12}>
+                        {user &&
+                            <Card>
+                                <CardHeader title={user.name}/>
+                                {user.avatar === null ? 'No avatar' :
+                                    <Avatar
+                                        alt="avatar"
+                                        src={user.avatar}
+                                        sx={{width: 56, height: 56}}
+                                    />}
+                                <CardContent>
+                                    <Typography>Login: {user.login} </Typography>
+                                    <Typography>Email: {user.email === null ? 'User did not add email' : user.email} </Typography>
+                                    <Typography>Company: {user.company === null ? 'User did not add name of company' : user.company} </Typography>
+                                    <Typography>Location: {user.location === null ? 'User did not add location' : user.location} </Typography>
+                                    <Typography>Bio: {user.bio === null ? 'User did not add bio' : user.bio} </Typography>
+                                    <Typography>Url: {user.url} </Typography>
+                                </CardContent>
+                            </Card>
+                        }
+                    </Grid>}
+            </Grid>
+        </Grid>
     );
 };
 
