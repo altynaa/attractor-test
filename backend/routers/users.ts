@@ -15,7 +15,7 @@ usersRouter.post('/github', async (req, res, next) => {
                 client_id: GITHUB_CLIENT_ID,
                 client_secret: CLIENT_SECRET,
                 code: req.body.code,
-                scope: "user user:email"
+                scope: 'repo user'
             }
         });
 
