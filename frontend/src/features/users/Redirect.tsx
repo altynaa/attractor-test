@@ -13,7 +13,6 @@ const Redirect = () => {
 
     useEffect( () => {
         if (code) {
-            console.log(code)
             dispatch(githubLogin(code));
             navigate('/profile');
         }

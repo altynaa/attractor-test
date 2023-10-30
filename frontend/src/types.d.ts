@@ -30,3 +30,7 @@ export interface Repository {
     ownerUrl: string,
     private: boolean
 }
+
+export interface Search {
+    name: string
+}

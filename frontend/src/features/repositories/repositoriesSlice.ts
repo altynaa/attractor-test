@@ -1,16 +1,20 @@
 import {Repository} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
-import {getRepos} from "./repositoriesThunks";
+import {getRepos, getReposByLogin} from "./repositoriesThunks";
 import {RootState} from "../../app/store";
 
 interface RepositoriesState {
     repositories: Repository [];
-    loading: boolean
+    loading: boolean;
+    repositoriesByLogin: Repository[];
+    repositoriesByLoginLoading: boolean
 }
 
 const initialState: RepositoriesState = {
     repositories: [],
-    loading: false
+    loading: false,
+    repositoriesByLogin: [],
+    repositoriesByLoginLoading: false
 };
 
 const repositoriesSlice = createSlice({
@@ -28,6 +32,17 @@ const repositoriesSlice = createSlice({
         builder.addCase(getRepos.rejected, (state) => {
             state.loading = false;
         });
+
+        builder.addCase(getReposByLogin.pending, (state) => {
+            state.repositoriesByLoginLoading = true;
+        });
+        builder.addCase(getReposByLogin.fulfilled, (state, {payload: repos}) => {
+            state.repositoriesByLoginLoading = false;
+            state.repositoriesByLogin = repos;
+        });
+        builder.addCase(getReposByLogin.rejected, (state) => {
+            state.repositoriesByLoginLoading = false;
+        });
     }
 });
 
@@ -35,3 +50,4 @@ export const repositoriesReducer = repositoriesSlice.reducer;
 
 export const selectRepositories = (state: RootState) => state.repositories.repositories;
 export const selectRepositoriesLoading = (state: RootState) => state.repositories.loading;
+export const selectRepositoriesByLogin = (state: RootState) => state.repositories.repositoriesByLogin;

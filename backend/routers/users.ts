@@ -62,6 +62,17 @@ usersRouter.patch('/edit', async (req, res, next) => {
     } catch (error) {
         return next(error);
     }
+});
+
+usersRouter.get('/search', async (req, res) => {
+    try {
+        const octokit = new Octokit();
+        const response = await octokit.request(`GET /users/${req.query.q}`);
+        return res.send(response.data.login);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 })
 
 export default usersRouter;

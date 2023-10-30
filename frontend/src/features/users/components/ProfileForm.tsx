@@ -39,9 +39,8 @@ const ProfileForm = () => {
 
     const onFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('profile', profile);
         dispatch(editProfile(profile));
-        navigate('/');
+        navigate('/profile');
     };
 
 

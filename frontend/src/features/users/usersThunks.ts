@@ -23,4 +23,12 @@ export const editProfile = createAsyncThunk<void, Profile >(
     async (profile) => {
         await axiosApi.patch('/users/edit', profile);
     }
-)
+);
+
+export const findUsers = createAsyncThunk<string, string>(
+    'users/findUsers',
+    async (search) => {
+        const response = await axiosApi.get('/users/search?q=' + search);
+        return response.data;
+    }
+);

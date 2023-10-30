@@ -7,6 +7,7 @@ import ProfileForm from "./features/users/components/ProfileForm";
 import AppToolBar from "./components/UI/AppToolBar";
 import {Container, CssBaseline} from "@mui/material";
 import Repositories from "./features/repositories/Repositories";
+import FindUsers from "./features/users/FindUsers";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                       <Route path="/profile" element={<Profile/>}/>
                       <Route path="/profileForm" element={<ProfileForm/>}/>
                       <Route path="/repositories" element={<Repositories/>}/>
+                      <Route path="/findUsers" element={<FindUsers/>}/>
                       <Route path="*" element={<h2>Page not found</h2>}/>
                   </Routes>
               </Container>
