@@ -21,3 +21,12 @@ export interface Profile {
     location: string,
     bio: string,
 }
+
+export interface Repository {
+    id: number,
+    name: string,
+    url: string,
+    ownerName: string,
+    ownerUrl: string,
+    private: boolean
+}

@@ -6,6 +6,7 @@ import Profile from "./features/users/Profile";
 import ProfileForm from "./features/users/components/ProfileForm";
 import AppToolBar from "./components/UI/AppToolBar";
 import {Container, CssBaseline} from "@mui/material";
+import Repositories from "./features/repositories/Repositories";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                       <Route path="/redirect" element={<Redirect/>}/>
                       <Route path="/profile" element={<Profile/>}/>
                       <Route path="/profileForm" element={<ProfileForm/>}/>
+                      <Route path="/repositories" element={<Repositories/>}/>
                       <Route path="*" element={<h2>Page not found</h2>}/>
                   </Routes>
               </Container>
